@@ -11,3 +11,10 @@ test('json', async t => {
 
   t.deepEqual(actual, expected)
 })
+
+test('files', async t => {
+  const actual = await merged('test/files')
+  const expected = JSON.parse(await readFile('test/files-expected.json', 'utf8'))
+
+  t.deepEqual(actual, expected)
+})

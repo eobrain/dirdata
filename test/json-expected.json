@@ -1,21 +1,25 @@
 {
     "top.json": {
-        "aaa": "AAA",
-        "bbb": [
-            "BBB",
-            444,
-            555
-        ]
+        "data": {
+            "aaa": "AAA",
+            "bbb": [
+                "BBB",
+                444,
+                555
+            ]
+        }
     },
     "sub": {
-        "lower.json": [
-            111,
-            222,
-            444,
-            {
-                "ppp": "PPP",
-                "qqq": "QQQ"
-            }
-        ]
+        "lower.json": {
+            "data": [
+                111,
+                222,
+                444,
+                {
+                    "ppp": "PPP",
+                    "qqq": "QQQ"
+                }
+            ]
+        }
     }
 }

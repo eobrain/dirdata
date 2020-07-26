@@ -15,5 +15,9 @@ export const merged = async path => {
     return result
   }
 
-  return JSON.parse(await readFile(path, 'utf8'))
+  if (path.endsWith('.json')) {
+    const data = JSON.parse(await readFile(path, 'utf8'))
+    return { data }
+  }
+  return { path }
 }
