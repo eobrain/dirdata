@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Create a single JSON file from all the JSON-compatible files in a directory",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "ava"
   },
@@ -24,5 +25,8 @@
   "homepage": "https://github.com/eobrain/dirdata#readme",
   "devDependencies": {
     "ava": "^3.10.1"
+  },
+  "dependencies": {
+    "passprint": "0.0.1"
   }
 }
