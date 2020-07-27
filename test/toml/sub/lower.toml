@@ -1,0 +1,5 @@
+foo = [111, 222, 444]
+
+[bar]
+ppp = "PPP"
+qqq = "QQQ"

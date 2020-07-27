@@ -1,0 +1,10 @@
+{
+    "foo.html": {
+        "path": "test/files/foo.html"
+    },
+    "lower": {
+        "bar.html": {
+            "path": "test/files/lower/bar.html"
+        }
+    }
+}
