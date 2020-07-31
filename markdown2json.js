@@ -43,40 +43,65 @@ const viewAST = node => {
   return result
 }
 
+const mergeText = a => {
+  let text
+  const result = []
+  for (const child of a) {
+    if (typeof child === 'string') {
+      if (text === undefined) {
+        text = child
+      } else {
+        text += child
+      }
+    } else {
+      if (text !== undefined) {
+        result.push(text)
+        text = undefined
+      }
+      result.push(child)
+    }
+  }
+  if (text !== undefined) {
+    result.push(text)
+  }
+  return result
+}
+
 const node2json = node => {
-  const recurse = () => Array.from(children(node)).map(child => node2json(child))
+  const recurse = () => mergeText(Array.from(children(node)).map(child => node2json(child)))
 
   switch (node.type) {
     case 'text': return node.literal
-    case 'softbreak': break
+    case 'softbreak':return '\n'
     case 'linebreak': break
-    case 'emph': break
-    case 'strong': break
-    case 'html_inline': break
-    case 'link': break
+    case 'emph': return { em: recurse() }
+    case 'link': return {
+      href: node.destination,
+      title: node.title,
+      a: recurse()
+    }
     case 'image': break
-    case 'code': break
     case 'document': return recurse()
-    case 'paragraph': return {
-      p: recurse()
-    }
-    case 'block_quote': return {
-      blockquote: recurse()
-    }
-    case 'item': return {
-      li: recurse()
-    }
+    case 'paragraph': return { p: recurse() }
+    case 'block_quote': return { blockquote: recurse() }
+    case 'item': return { li: recurse() }
     case 'list': return {
       [node.listType === 'bullet' ? 'ul' : 'ol']: recurse()
     }
-    case 'heading':
-      // result['H' + result.level] = node.firstChild.literal
-      break
-    case 'code_block': return {
-      [node.type]: node.literal
-    }
-    case 'html_block': break
-    case 'thematic_break': break
+    case 'heading':return { ['h' + node.level]: recurse() }
+
+    case 'strong':
+      return { [node.type]: recurse() }
+
+    case 'code':
+    case 'code_block':
+      return { [node.type]: node.literal }
+
+    case 'html_inline':
+    case 'html_block':
+      return { error: 'raw HTML not allowed' }
+
+    case 'thematic_break':return { hr: true }
     default:
       throw new Error('Unexpected node type ' + node.type)
   }
