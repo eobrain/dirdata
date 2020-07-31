@@ -27,6 +27,7 @@
     "ava": "^3.10.1"
   },
   "dependencies": {
+    "commonmark": "^0.29.1",
     "js-yaml": "^3.14.0",
     "passprint": "0.0.1",
     "toml": "^3.0.0"

@@ -1,6 +1,8 @@
 import fs from 'fs'
 import toml from 'toml'
 import yaml from 'js-yaml'
+import markdown2json from './markdown2json.js'
+
 // import passprint from 'passprint'
 // const { pp } = passprint
 
@@ -24,6 +26,8 @@ export const merged = async dir => {
       add('.yaml', yaml.safeLoad)
     } else if (child.endsWith('.toml')) {
       add('.toml', toml.parse)
+    } else if (child.endsWith('.md')) {
+      add('.md', markdown2json)
     } else {
       result[child] = { path: childPath }
     }

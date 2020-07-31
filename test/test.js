@@ -39,3 +39,10 @@ test('top-level-array', async t => {
 
   t.deepEqual(actual, expected)
 })
+
+/* test('markdown', async t => {
+  const actual = await merged('test/markdown')
+  const expected = JSON.parse(await readFile('test/markdown-expected.json', 'utf8'))
+
+  t.deepEqual(actual, expected)
+}) */
