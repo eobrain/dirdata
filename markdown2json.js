@@ -67,6 +67,10 @@ const mergeText = a => {
   return result
 }
 
+const innerTextArrays = node => Array.from(children(node)).map(child =>
+  child.literal || innerTextArrays(child)
+)
+
 const node2json = node => {
   const recurse = () => mergeText(Array.from(children(node)).map(child => node2json(child)))
 
@@ -75,12 +79,22 @@ const node2json = node => {
     case 'softbreak':return '\n'
     case 'linebreak': break
     case 'emph': return { em: recurse() }
-    case 'link': return {
+    case 'link': return node.title ? {
       href: node.destination,
       title: node.title,
       a: recurse()
+    } : {
+      href: node.destination,
+      a: recurse()
     }
-    case 'image': break
+    case 'image': return node.title ? {
+      img: node.destination,
+      alt: innerTextArrays(node).flat(Infinity).join(''),
+      title: node.title
+    } : {
+      img: node.destination,
+      alt: innerTextArrays(node).flat(Infinity).join('')
+    }
     case 'document': return recurse()
     case 'paragraph': return { p: recurse() }
     case 'block_quote': return { blockquote: recurse() }
