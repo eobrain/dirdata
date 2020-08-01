@@ -1,7 +1,7 @@
 
 import commonmark from 'commonmark'
-import passprint from 'passprint'
-const { pp } = passprint
+// import passprint from 'passprint'
+// const { pp } = passprint
 
 function * children (node) {
   for (let child = node.firstChild; child; child = child.next) {
@@ -77,7 +77,7 @@ const node2json = node => {
   switch (node.type) {
     case 'text': return node.literal
     case 'softbreak':return '\n'
-    case 'linebreak': break
+    case 'linebreak': return { br: true }
     case 'emph': return { em: recurse() }
     case 'link': return node.title ? {
       href: node.destination,
@@ -119,12 +119,12 @@ const node2json = node => {
     default:
       throw new Error('Unexpected node type ' + node.type)
   }
-  return 'UNHANDLED ' + node.type + ' ' + JSON.stringify(viewAST(node), null, ' ')
+  // return 'UNHANDLED ' + node.type + ' ' + JSON.stringify(viewAST(node), null, ' ')
 }
 
 export default md => {
   const reader = new commonmark.Parser()
   const node = reader.parse(md)
-  console.warn('AST=', JSON.stringify(viewAST(node), null, ' '))
+  // console.warn('AST=', JSON.stringify(viewAST(node), null, ' '))
   return node2json(node)
 }
