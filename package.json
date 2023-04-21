@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/eobrain/dirdata#readme",
   "devDependencies": {
-    "ava": "^3.10.1"
+    "ava": "^5.2.0"
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
